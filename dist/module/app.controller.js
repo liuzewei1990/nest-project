@@ -30,7 +30,7 @@ let AppController = class AppController {
         console.log(query);
         res.json({ a: 1 });
     }
-    testHttpCodeStatus() {
+    estHttpCodeStatus() {
         return "http:code";
     }
     createDto(createAppDto) {
@@ -51,22 +51,19 @@ __decorate([
     __metadata("design:returntype", Object)
 ], AppController.prototype, "root2", null);
 __decorate([
-    common_1.Get("test/:id"),
-    __param(0, common_1.Req()), __param(1, common_1.Res()), __param(2, common_1.Next()), __param(3, common_1.Session()), __param(4, common_1.Param()), __param(5, common_1.Body()), __param(6, common_1.Query()), __param(7, common_1.Headers()),
+    common_1.Get("test/:id"), __param(0, common_1.Req()), __param(1, common_1.Res()), __param(2, common_1.Next()), __param(3, common_1.Session()), __param(4, common_1.Param()), __param(5, common_1.Body()), __param(6, common_1.Query()), __param(7, common_1.Headers()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object, Object]),
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "findCustomerInfoById", null);
 __decorate([
-    common_1.HttpCode(302),
-    common_1.Get("http"),
+    common_1.HttpCode(302), common_1.Get("http"),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], AppController.prototype, "testHttpCodeStatus", null);
+], AppController.prototype, "estHttpCodeStatus", null);
 __decorate([
-    common_1.Post("dto"),
-    __param(0, common_1.Body()),
+    common_1.Post("dto"), __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [CreateAppDto]),
     __metadata("design:returntype", Object)

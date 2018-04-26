@@ -13,30 +13,34 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
-let CatsController = class CatsController {
-    create(res, body) {
-        res.status(common_1.HttpStatus.CREATED).send();
+const ad_service_1 = require("./ad.service");
+let AdController = class AdController {
+    constructor(adService) {
+        this.adService = adService;
     }
-    findAll(res) {
-        res.status(common_1.HttpStatus.OK).json([]);
+    create(body) {
+        this.adService.createAd(body);
+        return { resultCode: 0, resultMsg: "添加成功" };
+    }
+    findAll() {
+        return this.adService.findAds();
     }
 };
 __decorate([
-    common_1.Post(),
-    __param(0, common_1.Res()), __param(1, common_1.Body()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", void 0)
-], CatsController.prototype, "create", null);
-__decorate([
-    common_1.Get(),
-    __param(0, common_1.Res()),
+    common_1.Post(), __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], CatsController.prototype, "findAll", null);
-CatsController = __decorate([
-    common_1.Controller('cats')
-], CatsController);
-exports.CatsController = CatsController;
+    __metadata("design:returntype", Object)
+], AdController.prototype, "create", null);
+__decorate([
+    common_1.Get(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], AdController.prototype, "findAll", null);
+AdController = __decorate([
+    common_1.Controller('ad'),
+    __metadata("design:paramtypes", [ad_service_1.AdService])
+], AdController);
+exports.AdController = AdController;
 //# sourceMappingURL=ad.controller.js.map

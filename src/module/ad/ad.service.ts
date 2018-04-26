@@ -1,12 +1,10 @@
 import { Component } from "@nestjs/common";
+import { Ad } from "./ad.dto";
 
-class Ad {
-  readonly name: string;
-}
 
 @Component()
 export class AdService {
-  private readonly ads: Ad[] = [];
+  private readonly ads: Ad[] = [{ name: "111", age: 0 }];
 
   createAd(ad: Ad) {
     this.ads.push(ad);

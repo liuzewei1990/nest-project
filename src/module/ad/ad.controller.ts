@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Res, Body, HttpStatus } from '@nestjs/common';
 import { AdService } from "./ad.service";
+import { Ad } from './ad.dto';
 
 @Controller('ad')
 export class AdController {
@@ -8,7 +9,8 @@ export class AdController {
   }
 
   @Post() create(@Body() body): object {
-    this.adService.createAd(body);
+    let data: Ad = { name: "", age: 1 };
+    this.adService.createAd(data);
     return { resultCode: 0, resultMsg: "添加成功" }
   }
 
