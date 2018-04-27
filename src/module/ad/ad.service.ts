@@ -4,7 +4,7 @@ import { Ad } from "./ad.dto";
 
 @Component()
 export class AdService {
-  private readonly ads: Ad[] = [{ name: "111", age: 0 }];
+  private readonly ads: Ad[] = [{ name: "刘泽伟", age: 20 }];
 
   createAd(ad: Ad) {
     this.ads.push(ad);
