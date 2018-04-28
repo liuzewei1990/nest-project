@@ -29,13 +29,13 @@ export class UsersController {
     // throw new HttpException("这是服务器手动抛出的异常错误",HttpStatus.FORBIDDEN);
 
     //自定义异常二
-    // throw new HttpException({
-    //   resultCode:HttpStatus.FORBIDDEN,
-    //   resultMsg:"这是服务器手动抛出的异常错误"
-    // },HttpStatus.FORBIDDEN);
+    throw new HttpException({
+      resultCode: HttpStatus.FORBIDDEN,
+      resultMsg: "这是服务器手动抛出的异常错误"
+    }, HttpStatus.FORBIDDEN);
 
     //使用继承HttpException抛出异常
-    throw new ForbiddenHttpException();
+    // throw new ForbiddenHttpException();
 
     //nest内置异常
     // throw new RequestTimeoutException()
