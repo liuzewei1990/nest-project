@@ -15,7 +15,7 @@ export class UsersController {
 
   @Get("branch4")
   findUse4(): string {
-    return "新开发的路由4";
+    return "新开发的路由4-上线";
   }
 
   @Get("branch3")
