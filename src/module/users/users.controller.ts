@@ -20,7 +20,7 @@ export class UsersController {
 
   @Get("branch")
   findUser(): object {
-    return this.adService.findAds();
+    return {};
   }
 
   @Get("error") exception() {
