@@ -13,6 +13,11 @@ export class UsersController {
     return this.adService.findAds();
   }
 
+  @Get("branch")
+  findUser(): object {
+    return this.adService.findAds();
+  }
+
   @Get("error") exception() {
 
     //自定义异常一
