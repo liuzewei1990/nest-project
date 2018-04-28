@@ -13,6 +13,11 @@ export class UsersController {
     return this.adService.findAds();
   }
 
+  @Get("branch1")
+  findUse(): object {
+    return this.adService.findAds();
+  }
+
   @Get("branch")
   findUser(): string {
     return "我是在bug分支上修改的东西";
