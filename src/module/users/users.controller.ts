@@ -15,7 +15,7 @@ export class UsersController {
 
   @Get("branch3")
   findUse3(): string {
-    return "新开发的路由3发布上线-我是在bug4分支做的修改-再改";
+    return "新开发的路由3发布上线-我是在bug4分支做的修改-再改-再改";
   }
 
   @Get("branch2")
