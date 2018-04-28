@@ -19,8 +19,8 @@ export class UsersController {
   }
 
   @Get("branch")
-  findUser(): string {
-    return "我是在bug分支上修改的东西";
+  findUser(): object {
+    return this.adService.findAds();
   }
 
   @Get("error") exception() {
@@ -35,7 +35,7 @@ export class UsersController {
     // },HttpStatus.FORBIDDEN);
 
     //使用继承HttpException抛出异常
-    // throw new ForbiddenHttpException();
+    throw new ForbiddenHttpException();
 
     //nest内置异常
     // throw new RequestTimeoutException()
