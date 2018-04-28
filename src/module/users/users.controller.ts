@@ -13,6 +13,11 @@ export class UsersController {
     return this.adService.findAds();
   }
 
+  @Get("branch4")
+  findUse4(): string {
+    return "新开发的路由4-上线";
+  }
+
   @Get("branch3")
   findUse3(): string {
     return "新开发的路由3发布上线-我是在bug4分支做的修改-再改-再改";
