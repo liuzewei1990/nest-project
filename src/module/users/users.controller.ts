@@ -19,8 +19,8 @@ export class UsersController {
   }
 
   @Get("branch")
-  findUser(): object {
-    return this.adService.findAds();
+  findUser(): string {
+    return "我是在bug分支上修改的东西";
   }
 
   @Get("error") exception() {
