@@ -35,7 +35,7 @@ export class UsersController {
     // },HttpStatus.FORBIDDEN);
 
     //使用继承HttpException抛出异常
-    throw new ForbiddenHttpException();
+    // throw new ForbiddenHttpException();
 
     //nest内置异常
     // throw new RequestTimeoutException()
