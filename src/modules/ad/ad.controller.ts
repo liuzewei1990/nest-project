@@ -12,13 +12,8 @@ export class AdController {
 
   @Get("add")
   create(@Query(new ValidationPipe()) createAdDto: AdDto) {
-    return this.adService.createAd(createAdDto)
-      .then((data) => {
-        return { resultCode: 0, resultMsg: "添加成功", data: data }
-      })
-      .catch(() => {
-        return { resultCode: 1001, resultMsg: "添加失败" }
-      })
+    this.adService.createAd(createAdDto)
+    return { resultCode: 0, resultMsg: "添加成功" }
   }
 
   @Get()
