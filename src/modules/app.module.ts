@@ -7,7 +7,7 @@ import { UsersModule } from "./users/uesrs.module";
 import { AppController } from './app.controller';
 
 @Module({
-  imports: [AdModule, UsersModule, MongooseModule.forRoot("mongodb://localhost:27017/store")],
+  imports: [AdModule, UsersModule, MongooseModule.forRoot("mongodb://47.94.3.28:8060/store")],
   exports: [],
   controllers: [AppController],
   components: []
