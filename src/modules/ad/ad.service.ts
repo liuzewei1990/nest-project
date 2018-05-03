@@ -7,22 +7,25 @@ import { AdInterface } from "./interfaces/ad.interface";
 
 @Component()
 export class AdService implements OnModuleInit, OnModuleDestroy {
-  private readonly ads: AdDto[] = [];
-  constructor(@InjectModel(AdSchema) private readonly adModel: Model<AdInterface>) { }
 
-  async createAd(ad: AdDto): Promise<AdInterface> {
-    const createdCat = new this.adModel(ad);
-    return await createdCat.save();
-  }
+	constructor(@InjectModel(AdSchema) private readonly adModel: Model<AdInterface>) {
 
-  findAds() {
-    return this.adModel.find();
-  }
+	}
 
-  onModuleInit() {
-    console.log(`Module's 初始化...`);
-  }
-  onModuleDestroy() {
-    console.log(`Module's 销毁...`);
-  }
+	async createAd(ad: AdDto): Promise<AdInterface> {
+		return this.adModel.create(ad);
+	}
+
+	async findAds(): Promise<AdInterface[]> {
+		return this.adModel.find();
+	}
+
+	onModuleInit() {
+		console.log(`Module's 初始化...`);
+	}
+	onModuleDestroy() {
+		console.log(`Module's 销毁...`);
+	}
 }
+
+
