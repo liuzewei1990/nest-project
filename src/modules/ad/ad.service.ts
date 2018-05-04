@@ -1,5 +1,5 @@
 import { Component, OnModuleInit, OnModuleDestroy } from "@nestjs/common";
-import { AdDto } from "./ad.dto";
+import { AdDto } from "./dto/ad.dto";
 import { InjectModel } from "@nestjs/mongoose";
 import { AdSchema } from "./schemas/ad.schemas";
 import { Model, Document } from "mongoose";
@@ -17,7 +17,7 @@ export class AdService implements OnModuleInit, OnModuleDestroy {
 	}
 
 	async findAds(): Promise<AdInterface[]> {
-		return this.adModel.find();
+		return this.adModel.find()
 	}
 
 	onModuleInit() {

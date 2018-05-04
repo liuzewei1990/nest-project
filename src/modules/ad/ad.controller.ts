@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Res, Body, HttpStatus, Query, ValidationPipe } from '@nestjs/common';
 import { AdService } from "./ad.service";
-import { AdDto } from './ad.dto';
+import { AdDto } from './dto/ad.dto';
 import { Ad } from "./ad.decorator";
 // import { ValidationPipe } from "./validation.pipe";
 
@@ -25,6 +25,12 @@ export class AdController {
 
 	@Get()
 	public findServiceAdList(): object {
-		return this.adService.findAds();
+		return this.adService.findAds()
+			.then((dataList) => {
+				console.log(dataList)
+				return { resultCode: 0, resultMsg: "查询成功", data: dataList }
+			}).catch((err) => {
+				return { resultCode: 1001, resultMsg: "查询失败", data: err }
+			})
 	}
 }

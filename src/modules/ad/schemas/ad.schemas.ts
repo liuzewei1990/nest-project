@@ -2,7 +2,9 @@ import * as mongoose from 'mongoose';
 
 export const AdSchema = new mongoose.Schema({
 	linkUrl: { type: String },
-	base64: { type: String }
+	base64: { type: String },
+	defaultStatus: { type: Boolean, default: false },
+	cteateDate: { type: Date, default: Date.now },
 },
 	{
 		collection: 'ad'
