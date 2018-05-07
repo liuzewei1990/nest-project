@@ -16,7 +16,7 @@ async function bootstrap() {
 
   // instance.use(bodyParser.json());
   // instance.use(bodyParser.urlencoded({ extended: false }));
-  const app = await NestFactory.create(ApplicationModule, instance);
+  const app = await NestFactory.create(ApplicationModule, instance, null);
   // app.setGlobalPrefix('v1');
   await app.listen(8070);
 }
