@@ -30,63 +30,63 @@ export class AdController {
 	public findServiceAdList(): object {
 
 		return this.adService.findAds()
-		.then((dataList) => {
-			return { resultCode: 0, resultMsg: "查询成功", data: dataList }
-		}).catch((err) => {
-			return { resultCode: 1001, resultMsg: "查询失败", data: err }
-		})
+			.then((dataList) => {
+				return { resultCode: 0, resultMsg: "查询成功", data: dataList }
+			}).catch((err) => {
+				return { resultCode: 1001, resultMsg: "查询失败", data: err }
+			})
 	}
 
 	@Get("delete")
-	public deleteAdById(@Query() {id}):object{
+	public deleteAdById(@Query() { id }): object {
 
-		if(!id) return { resultCode: 1001, resultMsg: "id不能为空" }
+		if (!id) return { resultCode: 1001, resultMsg: "id不能为空" }
 
 		return this.adService.deleteAdById(id)
-		.then(res=>{
-			return { resultCode: 0, resultMsg: "删除成功", data: res }
-		}).catch((err) => {
-			return { resultCode: 1001, resultMsg: "删除失败", data: err }
-		})
+			.then(res => {
+				return { resultCode: 0, resultMsg: "删除成功", data: res }
+			}).catch((err) => {
+				return { resultCode: 1001, resultMsg: "删除失败", data: err }
+			})
 	}
 
 	@Get("setDelault")
-	public setDefault(@Query() {id}):object{
+	public setDefault(@Query() { id }): object {
 
-		if(!id) return { resultCode: 1001, resultMsg: "id不能为空" }
+		if (!id) return { resultCode: 1001, resultMsg: "id不能为空" }
 
 		return this.adService.setAdDefaultStatus(id)
-		.then(res=>{
-			return { resultCode: 0, resultMsg: "设置成功", data: res }
-		}).catch((err) => {
-			return { resultCode: 1001, resultMsg: "设置失败", data: err }
-		})
+			.then(res => {
+				return { resultCode: 0, resultMsg: "设置成功", data: res }
+			}).catch((err) => {
+				return { resultCode: 1001, resultMsg: "设置失败", data: err }
+			})
 	}
 
 	@Get("history")
-	public createAdHistory(@Query() {id}){
-		
-		if(!id) return { resultCode: 1001, resultMsg: "id不能为空" }
+	public createAdHistory(@Query("id") id) {
+
+		if (!id) return { resultCode: 1001, resultMsg: "id不能为空" }
 
 		return this.adService.createOneAdHistory({
-			adNo:id
-		}).then(res=>{
+			adNo: id
+		}).then(res => {
 			return { resultCode: 0, resultMsg: "创建成功", data: res }
 		}).catch((err) => {
 			return { resultCode: 1001, resultMsg: "创建失败", data: err }
-		})	
+		})
 
 	}
 
 	@Get("findHistory")
-	public findHistory(){
+	public findHistory() {
 
 		return this.adService.findAdHistoryAll()
-		.then((dataList) => {
-			return { resultCode: 0, resultMsg: "查询成功", data: dataList }
-		}).catch((err) => {
-			return { resultCode: 1001, resultMsg: "查询失败", data: err }
-		})
+			.then((dataList) => {
+				return { resultCode: 0, resultMsg: "查询成功", data: dataList }
+			}).catch((err) => {
+				return { resultCode: 1001, resultMsg: "查询失败", data: err }
+			})
 	}
 
 
