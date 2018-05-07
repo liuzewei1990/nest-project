@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Res, Body, HttpStatus, Query, ValidationPipe, HttpCode, Put } from '@nestjs/common';
+import { Controller, Get, Post, Res, Body, HttpStatus, Query, ValidationPipe, HttpCode, Put, HttpException } from '@nestjs/common';
 import { AdService } from "./ad.service";
 import { AdDto } from './dto/ad.dto';
 import { Ad } from "./ad.decorator";
@@ -79,7 +79,8 @@ export class AdController {
 			.then(res => {
 				return { resultCode: 0, resultMsg: "设置成功", data: res }
 			}).catch((err) => {
-				return err
+				// throw new HttpException(err.message, HttpStatus.FORBIDDEN);
+				return { resultCode: 1001, resultMsg: err.message }
 			})
 	}
 

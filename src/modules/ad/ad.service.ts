@@ -49,11 +49,12 @@ export class AdService implements OnModuleInit, OnModuleDestroy {
 	 * @param id 广告id
 	 */
 	async setAdDefaultStatus(id: string) {
-		try {
-			await this.adModel.findOne({ _id: id })
-		} catch (err) {
-			throw new HttpException("id有误！", HttpStatus.FORBIDDEN);
-		}
+		// try {
+		await this.adModel.findOne({ _id: id })
+		// } catch (err) {
+		// 	throw new HttpException("id有误！", HttpStatus.FORBIDDEN);
+
+		// }
 		await this.adModel.updateOne({ defaultStatus: true }, { defaultStatus: false });
 		return this.adModel.updateOne({ _id: id }, { defaultStatus: true })
 	}

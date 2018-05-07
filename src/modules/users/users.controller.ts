@@ -1,4 +1,4 @@
-import { Controller, Get, HttpStatus, RequestTimeoutException, NotFoundException } from "@nestjs/common";
+import { Controller, Get, HttpStatus, RequestTimeoutException, NotFoundException, HttpCode } from "@nestjs/common";
 import { AdService } from "../ad/ad.service";
 import { HttpException } from "@nestjs/core";
 import { ForbiddenHttpException } from "../../httpException/forbidden.exception";
@@ -39,6 +39,7 @@ export class UsersController {
     return {};
   }
 
+  @HttpCode(200)
   @Get("error") exception() {
 
     //自定义异常一
