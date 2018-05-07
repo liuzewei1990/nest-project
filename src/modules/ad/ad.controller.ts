@@ -13,8 +13,8 @@ export class AdController {
 		this.name = "字符串"
 	}
 
-	@Get("add")
-	public newCreateAdToServiceSave(@Query(new ValidationPipe()) createAdDto: AdDto) {
+	@Post()
+	public newCreateAdToServiceSave(@Body(new ValidationPipe()) createAdDto: AdDto) {
 
 		return this.adService.createAd({
 			linkUrl: createAdDto.linkUrl,
@@ -37,8 +37,8 @@ export class AdController {
 			})
 	}
 
-	@Get("delete")
-	public deleteAdById(@Query() { id }): object {
+	@Post("delete")
+	public deleteAdById(@Body() { id }): object {
 
 		if (!id) return { resultCode: 1001, resultMsg: "id不能为空" }
 
@@ -50,8 +50,8 @@ export class AdController {
 			})
 	}
 
-	@Get("setDelault")
-	public setDefault(@Query() { id }): object {
+	@Post("setDelault")
+	public setDefault(@Body() { id }): object {
 
 		if (!id) return { resultCode: 1001, resultMsg: "id不能为空" }
 
