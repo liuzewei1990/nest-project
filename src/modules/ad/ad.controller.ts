@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Res, Body, HttpStatus, Query, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Res, Body, HttpStatus, Query, ValidationPipe, HttpCode } from '@nestjs/common';
 import { AdService } from "./ad.service";
 import { AdDto } from './dto/ad.dto';
 import { Ad } from "./ad.decorator";
@@ -13,6 +13,7 @@ export class AdController {
 		this.name = "字符串"
 	}
 
+	@HttpCode(200)
 	@Post()
 	public newCreateAdToServiceSave(@Body(new ValidationPipe()) createAdDto: AdDto) {
 
@@ -22,10 +23,11 @@ export class AdController {
 		}).then((res) => {
 			return { resultCode: 0, resultMsg: "添加成功", data: res }
 		}).catch((err) => {
-			return { resultCode: 1001, resultMsg: "添加失败", data: err }
+			return { resultCode: 1001, resultMsg: err.message }
 		})
 	}
 
+	@HttpCode(200)
 	@Get()
 	public findServiceAdList(): object {
 
@@ -33,10 +35,11 @@ export class AdController {
 			.then((dataList) => {
 				return { resultCode: 0, resultMsg: "查询成功", data: dataList }
 			}).catch((err) => {
-				return { resultCode: 1001, resultMsg: "查询失败", data: err }
+				return { resultCode: 1001, resultMsg: err.message }
 			})
 	}
 
+	@HttpCode(200)
 	@Post("delete")
 	public deleteAdById(@Body() { id }): object {
 
@@ -46,38 +49,39 @@ export class AdController {
 			.then(res => {
 				return { resultCode: 0, resultMsg: "删除成功", data: res }
 			}).catch((err) => {
-				return { resultCode: 1001, resultMsg: "删除失败", data: err }
+				return { resultCode: 1001, resultMsg: err.message }
 			})
 	}
 
-	@Post("setDelault")
-	public setDefault(@Body() { id }): object {
-
+	@HttpCode(200)
+	@Post("setDefault")
+	public setDefault(@Body() body): object {
+		let { id } = body;
 		if (!id) return { resultCode: 1001, resultMsg: "id不能为空" }
 
 		return this.adService.setAdDefaultStatus(id)
 			.then(res => {
 				return { resultCode: 0, resultMsg: "设置成功", data: res }
 			}).catch((err) => {
-				return { resultCode: 1001, resultMsg: "设置失败", data: err }
+				return { resultCode: 1001, resultMsg: err.message }
 			})
 	}
 
-	@Get("history")
+	@HttpCode(200)
+	@Post("history")
 	public createAdHistory(@Query("id") id) {
 
 		if (!id) return { resultCode: 1001, resultMsg: "id不能为空" }
 
-		return this.adService.createOneAdHistory({
-			adNo: id
-		}).then(res => {
-			return { resultCode: 0, resultMsg: "创建成功", data: res }
-		}).catch((err) => {
-			return { resultCode: 1001, resultMsg: "创建失败", data: err }
-		})
-
+		return this.adService.createOneAdHistory({ adNo: id })
+			.then(res => {
+				return { resultCode: 0, resultMsg: "创建成功", data: res }
+			}).catch((err) => {
+				return { resultCode: 1001, resultMsg: err.message }
+			})
 	}
 
+	@HttpCode(200)
 	@Get("findHistory")
 	public findHistory() {
 
@@ -85,7 +89,7 @@ export class AdController {
 			.then((dataList) => {
 				return { resultCode: 0, resultMsg: "查询成功", data: dataList }
 			}).catch((err) => {
-				return { resultCode: 1001, resultMsg: "查询失败", data: err }
+				return { resultCode: 1001, resultMsg: err.message }
 			})
 	}
 
