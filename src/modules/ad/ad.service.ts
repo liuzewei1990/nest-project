@@ -1,4 +1,4 @@
-import { Component, OnModuleInit, OnModuleDestroy } from "@nestjs/common";
+import { Component, OnModuleInit, OnModuleDestroy, HttpException, HttpStatus } from "@nestjs/common";
 import { AdDto } from "./dto/ad.dto";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model, Document } from "mongoose";
@@ -24,11 +24,15 @@ export class AdService implements OnModuleInit, OnModuleDestroy {
 		return this.adModel.create(ad);
 	}
 
+	updatedAd(id: string, ad: AdDto): object {
+		return this.adModel.updateOne({ _ad: id }, ad)
+	}
+
 	/**
 	 * 查询全部广告信息
 	 */
 	async findAds(): Promise<AdInterface[]> {
-		return this.adModel.find();
+		return this.adModel.find({});
 	}
 
 	/**
@@ -45,7 +49,11 @@ export class AdService implements OnModuleInit, OnModuleDestroy {
 	 * @param id 广告id
 	 */
 	async setAdDefaultStatus(id: string) {
-		await this.adModel.findOne({ _id: id })
+		try {
+			await this.adModel.findOne({ _id: id })
+		} catch (err) {
+			throw new HttpException("id有误！", HttpStatus.FORBIDDEN);
+		}
 		await this.adModel.updateOne({ defaultStatus: true }, { defaultStatus: false });
 		return this.adModel.updateOne({ _id: id }, { defaultStatus: true })
 	}
@@ -62,7 +70,7 @@ export class AdService implements OnModuleInit, OnModuleDestroy {
 	 * 查询所有历史数据
 	 */
 	findAdHistoryAll() {
-		return this.AdHistory.find();
+		return this.AdHistory.find({ createTime: { "$lt": new Date("2018-05-07").toUTCString() } }).count();
 	}
 
 

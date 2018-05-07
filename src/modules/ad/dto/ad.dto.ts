@@ -9,4 +9,6 @@ export class AdDto {
   @IsString({ message: "请填写" })
   readonly base64: string;
 
+  readonly id?: string
+
 }

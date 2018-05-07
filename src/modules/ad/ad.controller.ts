@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Res, Body, HttpStatus, Query, ValidationPipe, HttpCode } from '@nestjs/common';
+import { Controller, Get, Post, Res, Body, HttpStatus, Query, ValidationPipe, HttpCode, Put } from '@nestjs/common';
 import { AdService } from "./ad.service";
 import { AdDto } from './dto/ad.dto';
 import { Ad } from "./ad.decorator";
@@ -15,7 +15,7 @@ export class AdController {
 
 	@HttpCode(200)
 	@Post()
-	public newCreateAdToServiceSave(@Body(new ValidationPipe()) createAdDto: AdDto) {
+	public createAd(@Body(new ValidationPipe()) createAdDto: AdDto) {
 
 		return this.adService.createAd({
 			linkUrl: createAdDto.linkUrl,
@@ -25,6 +25,22 @@ export class AdController {
 		}).catch((err) => {
 			return { resultCode: 1001, resultMsg: err.message }
 		})
+	}
+
+	@HttpCode(200)
+	@Put()
+	public upDateAd(@Body(new ValidationPipe()) createAdDto: AdDto) {
+		if (!createAdDto.id) return { resultCode: 1001, resultMsg: "id不能为空" }
+
+		try {
+			const res = this.adService.updatedAd(createAdDto.id, {
+				linkUrl: createAdDto.linkUrl,
+				base64: createAdDto.base64
+			})
+			return { resultCode: 0, resultMsg: "修改成功", data: res }
+		} catch (err) {
+			return { resultCode: 1001, resultMsg: err }
+		}
 	}
 
 	@HttpCode(200)
@@ -63,12 +79,12 @@ export class AdController {
 			.then(res => {
 				return { resultCode: 0, resultMsg: "设置成功", data: res }
 			}).catch((err) => {
-				return { resultCode: 1001, resultMsg: err.message }
+				return err
 			})
 	}
 
 	@HttpCode(200)
-	@Post("history")
+	@Get("history")
 	public createAdHistory(@Query("id") id) {
 
 		if (!id) return { resultCode: 1001, resultMsg: "id不能为空" }
