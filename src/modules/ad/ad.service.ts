@@ -32,7 +32,10 @@ export class AdService implements OnModuleInit, OnModuleDestroy {
 	 * 查询全部广告信息
 	 */
 	async findAds(): Promise<AdInterface[]> {
-		return this.adModel.find({});
+		//需要返回时间就改成 createTime: 1,
+		return this.adModel
+			.find({}, { createTime: 0, updateTime: 0 })
+			.sort({ _id: -1 });
 	}
 
 	/**
@@ -49,12 +52,8 @@ export class AdService implements OnModuleInit, OnModuleDestroy {
 	 * @param id 广告id
 	 */
 	async setAdDefaultStatus(id: string) {
-		// try {
-		await this.adModel.findOne({ _id: id })
-		// } catch (err) {
-		// 	throw new HttpException("id有误！", HttpStatus.FORBIDDEN);
 
-		// }
+		await this.adModel.findOne({ _id: id })
 		await this.adModel.updateOne({ defaultStatus: true }, { defaultStatus: false });
 		return this.adModel.updateOne({ _id: id }, { defaultStatus: true })
 	}
