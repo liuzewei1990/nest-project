@@ -32,10 +32,23 @@ export class AdService implements OnModuleInit, OnModuleDestroy {
 	 * 查询全部广告信息
 	 */
 	async findAds(): Promise<AdInterface[]> {
+
 		//需要返回时间就改成 createTime: 1,
 		return this.adModel
-			.find({}, { createTime: 0, updateTime: 0 })
-			.sort({ _id: -1 });
+			.find({}, { updateTime: 0 })
+			.sort({ _id: -1 })
+
+		// return this.adModel.aggregate([
+			
+		// 	{
+		// 		$project: {
+		// 			customerNo: '$_id',
+		// 			_id: '$-',
+        //         }
+		// 	}
+		// ]).exec()
+
+
 	}
 
 	/**
