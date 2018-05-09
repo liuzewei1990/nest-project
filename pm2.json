@@ -1,0 +1,19 @@
+{
+    "apps": [
+        {
+            "autorestart": false,
+            "watch": false,
+            "max_memory_restart": "2G",
+            "name": "CMSWing",
+            "cwd": "./",
+            "script": "./dist/main.js",
+            "instances": "3",
+            "exec_mode": "cluster",
+            "log_file": "./logs/pm2/combined.outerr.log",
+            "out_file": "./logs/pm2/out.log",
+            "error_file": "./logs/pm2/err.log",
+            "pid": "./logs/pm2/pids/app_name-id.pid",
+            "mergeLogs": false
+        }
+    ]
+}

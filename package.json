@@ -8,7 +8,7 @@
     "start": "ts-node -r tsconfig-paths/register src/main.ts",
     "start:dev": "nodemon",
     "prestart:prod": "tsc",
-    "start:prod": "pm2 start dist/main.js -i max",
+    "start:prod": "pm2 start pm2.json",
     "test": "jest",
     "test:cov": "jest --coverage",
     "test:e2e": "jest --config ./test/jest-e2e.json"

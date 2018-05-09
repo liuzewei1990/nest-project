@@ -3,6 +3,7 @@ import { AdService } from "./ad.service";
 import { AdDto } from './dto/ad.dto';
 import { Ad } from "./ad.decorator";
 import * as moment from "moment";
+import { logger } from "../../config/log4js.config";
 // import { ValidationPipe } from "./validation.pipe";
 
 
@@ -75,10 +76,12 @@ export class AdController {
 		let { id } = body;
 		if (!id) return { resultCode: 1001, resultMsg: "id不能为空" }
 
+		logger.info(id)
 		return this.adService.setAdDefaultStatus(id)
 			.then(res => {
 				return { resultCode: 0, resultMsg: "设置成功", data: res }
 			}).catch((err) => {
+				// logger.error(err)
 				// throw new HttpException(err.message, HttpStatus.FORBIDDEN);
 				return { resultCode: 1001, resultMsg: err.message }
 			})

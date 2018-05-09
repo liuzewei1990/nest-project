@@ -2,16 +2,14 @@ import { NestFactory } from '@nestjs/core';
 import { ApplicationModule } from './modules/app.module';
 import * as express from "express";
 import * as bodyParser from "body-parser";
-import { configure, getLogger } from 'log4js';
-
-import log4jsConfig from "./config/log4js.config";
+import { connectMyLogger } from './config/log4js.config';
 
 async function bootstrap() {
 
-  const instance = express();
+  const app = express();
 
   /* 全局headers */
-  instance.all('*', function (req, res, next) {
+  app.all('*', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
@@ -20,22 +18,16 @@ async function bootstrap() {
   });
 
   /*POST request body-parser */
-  instance.use(bodyParser.json());
-  instance.use(bodyParser.urlencoded({ extended: false }));
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: false }));
 
-  /* 日志配置 */
-  // configure('./logs');
-  const logger = getLogger();
+  /* 连接日志记录器 */
+  app.use(connectMyLogger)
 
-  configure(log4jsConfig);
+  /* server实例 */
+  const server = await NestFactory.create(ApplicationModule, app, null);
+  // server.setGlobalPrefix('v1');
+  await server.listen(8070);
 
-
-
-  /* APP实例 */
-  const app = await NestFactory.create(ApplicationModule, instance, null);
-  // app.setGlobalPrefix('v1');
-  await app.listen(8070);
-  // logger.level = 'info';
-  logger.info("APP启动1");
 }
 bootstrap();
