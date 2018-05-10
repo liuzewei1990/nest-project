@@ -72,11 +72,13 @@ configure({
 
 })
 
+/* 这里导出所有记录器 */
 export const logger = getLogger("logger");
 
 export const console = getLogger("console");
 
 /**
+ * 导出connectLogger 中间件 供express.use去使用。
  * 设置level为auto
  * 
  * 日志级别对应规则：

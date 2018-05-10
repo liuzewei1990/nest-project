@@ -6,6 +6,7 @@ import { AdInterface } from "./interfaces/ad.interface";
 import { AdSchema } from "./schemas/ad.schemas";
 import { AdHistorySchema } from "./schemas/ad.history.schemas";
 import { AdHistoryDto } from "./dto/ad.history.dto";
+import { SuccessResponseJson, FailResponseJson } from "../../config/responseStatusJson.config";
 
 @Component()
 export class AdService implements OnModuleInit, OnModuleDestroy {
@@ -16,76 +17,72 @@ export class AdService implements OnModuleInit, OnModuleDestroy {
 
 	}
 
-	/**
-	 * 增加一个新的广告
-	 * @param ad 广告信息对象
-	 */
-	async createAd(ad: AdDto): Promise<AdInterface> {
-		return this.adModel.create(ad);
+	public async createAd(ad: AdDto): Promise<any> {
+		return this.adModel.create(ad)
+			.then(ad => {
+				return new SuccessResponseJson("添加成功", ad)
+			})
+			.catch(err => {
+				return new FailResponseJson(err.message);
+			})
 	}
 
-	updatedAd(id: string, ad: AdDto): object {
+	public async updatedAd(id: string, ad: AdDto): Promise<any> {
 		return this.adModel.updateOne({ _ad: id }, ad)
+			.then(ad => {
+				return new SuccessResponseJson("修改成功", ad)
+			})
+			.catch(err => {
+				return new FailResponseJson(err.message);
+			})
 	}
 
-	/**
-	 * 查询全部广告信息
-	 */
-	async findAds(): Promise<AdInterface[]> {
-
+	public async findAds(): Promise<any> {
 		//需要返回时间就改成 createTime: 1,
-		return this.adModel
-			.find({}, { updateTime: 0 })
-			.sort({ _id: -1 })
-
-		// return this.adModel.aggregate([
-			
-		// 	{
-		// 		$project: {
-		// 			customerNo: '$_id',
-		// 			_id: '$-',
-        //         }
-		// 	}
-		// ]).exec()
-
-
+		let doc = this.adModel.find({}).sort({ _id: -1 })
+		return doc
+			.then(dataList => {
+				return new SuccessResponseJson("查询成功", dataList)
+			})
+			.catch(err => {
+				return new FailResponseJson(err.message);
+			})
 	}
 
-	/**
-	 * 删除指定的广告
-	 * @param id 广告id
-	 */
-	deleteAdById(id: string) {
-		return this.adModel.deleteOne({ _id: id });
+	public deleteAdById(id: string): Promise<any> {
+		return this.adModel.deleteOne({ _id: id })
+			.then(doc => {
+				return new SuccessResponseJson("删除成功");
+			})
+			.catch(err => {
+				return new FailResponseJson(err.message);
+			})
 		// return this.adModel.deleteMany({});
 	}
 
-	/**
-	 * 设置广告位默认
-	 * @param id 广告id
-	 */
-	async setAdDefaultStatus(id: string) {
-
-		await this.adModel.findOne({ _id: id })
-		await this.adModel.updateOne({ defaultStatus: true }, { defaultStatus: false });
-		return this.adModel.updateOne({ _id: id }, { defaultStatus: true })
+	public async setAdDefaultStatus(id: string): Promise<any> {
+		return this.adModel.findOne({ _id: id })
+			.then(async doc => {
+				if (doc) {
+					await this.adModel.updateOne({ defaultStatus: true }, { defaultStatus: false });
+					await this.adModel.updateOne({ _id: id }, { defaultStatus: true });
+					return new SuccessResponseJson("设置成功")
+				} else {
+					return new FailResponseJson("数据不存在", FailResponseJson.FAIL_CODE_1001);
+				}
+			})
+			.catch(err => {
+				return new FailResponseJson(err.message);
+			})
 	}
 
-	/**
-	 * 创建一条历史记录
-	 * @param history 广告id
-	 */
-	createOneAdHistory(history: AdHistoryDto) {
+	public createOneAdHistory(history: AdHistoryDto) {
 		return this.AdHistory.create(history);
 	}
 
-	/**
-	 * 查询所有历史数据
-	 */
-	findAdHistoryAll() {
+	public findAdHistoryAll() {
 		return this.AdHistory.find({ createTime: { "$lt": new Date("2018-05-07").toUTCString() } }).count();
 	}
-
 
 	onModuleInit() {
 		console.log(`Module's 初始化...`);
