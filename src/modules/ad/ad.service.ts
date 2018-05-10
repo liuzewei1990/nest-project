@@ -18,46 +18,42 @@ export class AdService implements OnModuleInit, OnModuleDestroy {
 	}
 
 	public async createAd(ad: AdDto): Promise<any> {
-		return this.adModel.create(ad)
-			.then(ad => {
-				return new SuccessResponseJson("添加成功", ad)
-			})
-			.catch(err => {
-				return new FailResponseJson(err.message);
-			})
+		try {
+			let newAd = await new this.adModel(ad)
+			newAd.save()
+			return new SuccessResponseJson("添加成功", newAd)
+		} catch (err) {
+			return new FailResponseJson(err.message);
+		}
 	}
 
 	public async updatedAd(id: string, ad: AdDto): Promise<any> {
-		return this.adModel.updateOne({ _ad: id }, ad)
-			.then(ad => {
-				return new SuccessResponseJson("修改成功", ad)
-			})
-			.catch(err => {
-				return new FailResponseJson(err.message);
-			})
+		try{
+			let newAd = await this.adModel.updateOne({ _ad: id }, ad)
+			return new SuccessResponseJson("修改成功", newAd)
+		}catch(err){
+			return new FailResponseJson(err.message);
+		}
 	}
 
 	public async findAds(): Promise<any> {
 		//需要返回时间就改成 createTime: 1,
-		let doc = this.adModel.find({}).sort({ _id: -1 })
-		return doc
-			.then(dataList => {
-				return new SuccessResponseJson("查询成功", dataList)
-			})
-			.catch(err => {
-				return new FailResponseJson(err.message);
-			})
+		try{
+			let list = await this.adModel.find({}).sort({ _id: -1 });
+			let count = await this.adModel.count({});
+			return new SuccessResponseJson("查询成功", {count,list})
+		}catch(err){
+			return new FailResponseJson(err.message);
+		}
 	}
 
-	public deleteAdById(id: string): Promise<any> {
-		return this.adModel.deleteOne({ _id: id })
-			.then(doc => {
-				return new SuccessResponseJson("删除成功");
-			})
-			.catch(err => {
-				return new FailResponseJson(err.message);
-			})
-		// return this.adModel.deleteMany({});
+	public async deleteAdById(id: string): Promise<any> {
+		try {
+			let d = await this.adModel.deleteOne({ _id: id })
+			return new SuccessResponseJson("删除成功");
+		} catch (err) {
+			return new FailResponseJson(err.message);
+		}
 	}
 
 	public async setAdDefaultStatus(id: string): Promise<any> {
