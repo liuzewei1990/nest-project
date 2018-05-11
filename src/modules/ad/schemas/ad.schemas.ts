@@ -36,13 +36,13 @@ export const AdSchema = new mongoose.Schema(
 );
 
 // AdSchema.set('toJSON', { getters: true, virtuals: true });
-AdSchema.set('toObject', { getters: true});
+AdSchema.set('toObject', { getters: true });
 
 
-AdSchema.path("linkUrl").set(v=>{
-	console.log(v)
-	return v+"?v=404"
-})
+// AdSchema.path("linkUrl").set(v=>{
+// 	console.log(v)
+// 	return v+"?v=404"
+// })
 AdSchema.path('createTime').get(function (v) {
 	return moment(v).format("YYYY-MM-DD HH:mm:ss");
 });
@@ -88,25 +88,25 @@ AdSchema.path('updateTime').get(function (v) {
 // 	console.log('this gets printed fourth');
 //   });
 
-AdSchema.pre('save',function (next) {
-	//这里的doc是一个数组
-	// console.log(doc)
-	console.log("这是一个Schema的save中间件pre钩子");
-	next()
-});
+// AdSchema.pre('save',function (next) {
+// 	//这里的doc是一个数组
+// 	// console.log(doc)
+// 	console.log("这是一个Schema的save中间件pre钩子");
+// 	next()
+// });
 
-AdSchema.pre('save',function (next) {
-	//这里的doc是一个数组
-	// console.log(doc)
-	console.log("这是一个Schema的save中间件pre钩子2");
-	next()
-});
+// AdSchema.pre('save',function (next) {
+// 	//这里的doc是一个数组
+// 	// console.log(doc)
+// 	console.log("这是一个Schema的save中间件pre钩子2");
+// 	next()
+// });
 
-AdSchema.post('save',function (doc) {
-	//这里的doc是一个数组
-	console.log(doc)
-	console.log("这是一个Schema的save中间件post钩子");
-});
+// AdSchema.post('save',function (doc) {
+// 	//这里的doc是一个数组
+// 	console.log(doc)
+// 	console.log("这是一个Schema的save中间件post钩子");
+// });
 
 // console.log(AdSchema.options)
 // if (!schema.options.toObject) schema.options.toObject = {};

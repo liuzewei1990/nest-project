@@ -13,6 +13,7 @@ const app_module_1 = require("./modules/app.module");
 const express = require("express");
 const bodyParser = require("body-parser");
 const log4js_config_1 = require("./config/log4js.config");
+require("./schedule");
 function bootstrap() {
     return __awaiter(this, void 0, void 0, function* () {
         const app = express();

@@ -4,6 +4,7 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import { connectMyLogger } from './config/log4js.config';
 
+
 async function bootstrap() {
 
   const app = express();
@@ -26,6 +27,7 @@ async function bootstrap() {
 
   /* server实例 */
   const server = await NestFactory.create(ApplicationModule, app, null);
+  // server.useStaticAssets()
   // server.setGlobalPrefix('v1');
   await server.listen(8070);
 

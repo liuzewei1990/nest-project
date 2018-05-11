@@ -1,4 +1,4 @@
-import { Controller, Get, HttpStatus, RequestTimeoutException, NotFoundException, HttpCode } from "@nestjs/common";
+import { Controller, Get, HttpStatus, RequestTimeoutException, NotFoundException, HttpCode, Render } from "@nestjs/common";
 import { AdService } from "../ad/ad.service";
 import { HttpException } from "@nestjs/core";
 import { ForbiddenHttpException } from "../../httpException/forbidden.exception";
@@ -9,6 +9,7 @@ export class UsersController {
   }
 
   @Get()
+  // @Render("index")
   findUsers(): object {
     return this.adService.findAds();
   }
